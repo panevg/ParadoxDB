@@ -3,6 +3,7 @@ import pkg from "../package.json";
 import { Signale } from "signale";
 import cac from "cac";
 import envPaths from "env-paths";
+import Manifest from "./Manifest";
 
 const log: Signale = new Signale();
 
@@ -22,11 +23,32 @@ const mode: "dev" | "prod" =
 
 cli
   .command("new-db", "Create a new database.")
-  .option("-n, --name <name>", "Database name.")
-  .option("-v, --vault <path>", "Database location.")
-  // .option("--", ".")
+  .option("--name <name>", "Database name.")
+  .option("--vault <path>", "Database location.")
   .action((options) => {
-    console.log(options);
+    try {
+      let mf = new Manifest(mode, paths);
+      mf.read();
+
+      if (
+        mf.vaults.find(
+          (v) => v.name === options.name || v.vault === options.vault,
+        )
+      ) {
+        log.error("Database with this name or vault already exists.");
+      } else {
+        mf.vaults.push({
+          name: options.name,
+          vault: options.vault,
+        });
+
+        log.success("Created new database.");
+
+        mf.write();
+      }
+    } catch (err) {
+      console.log(JSON.stringify(err));
+    }
   });
 
 cli.help();

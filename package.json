@@ -23,7 +23,6 @@
   "dependencies": {
     "cac": "^7.0.0",
     "env-paths": "^4.0.0",
-    "mri": "^1.2.0",
     "signale": "^1.4.0",
     "smol-toml": "^1.7.0",
     "valibot": "^1.4.2"
