@@ -2,7 +2,7 @@
   "name": "paradoxdb",
   "type": "module",
   "author": "panevg",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "scripts": {
     "build": "bun run ./build.js"
   },
@@ -10,7 +10,9 @@
     "entrypoint": "./src/index.ts",
     "filename": "paradox",
     "outdir": "./build",
-    "targets": ["bun-linux-x64"],
+    "targets": [
+      "bun-linux-x64"
+    ],
     "clean_outdir": true
   },
   "devDependencies": {
