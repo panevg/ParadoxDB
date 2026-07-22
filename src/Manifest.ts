@@ -5,6 +5,8 @@ import type { Paths } from "env-paths";
 import toml from "smol-toml";
 import { parse } from "valibot";
 
+import env from "./env";
+
 import { ManifestSchema } from "./schemas/Manifest.schema";
 import type { ManifestType, VaultType } from "./schemas/Manifest.schema";
 
@@ -13,7 +15,7 @@ export default class Manifest {
 
   public vaults: VaultType[] = [];
 
-  constructor(mode: "dev" | "prod", envs: Paths) {
+  constructor(mode: "dev" | "prod" = env.mode, envs: Paths = env.paths) {
     if (mode === "dev") {
       this.path = join("./config", "manifest.toml");
     } else {
@@ -40,5 +42,11 @@ export default class Manifest {
     } as ManifestType);
 
     writeFileSync(this.path, file, "utf-8");
+  }
+
+  public remove(name: string) {
+    this.vaults = this.vaults.filter((v) => v.name !== name);
+
+    this.write();
   }
 }
