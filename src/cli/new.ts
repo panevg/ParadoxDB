@@ -1,25 +1,31 @@
 import type CLI from "../cli";
+import Logger from "../Logger";
 import Manifest from "../Manifest";
 
 function New(opt: any) {
-  try {
-    let mf = new Manifest();
-    mf.read();
+  if (opt.name === undefined) {
+    Logger.error("option `--name <name>` is missing");
+    return;
+  }
+  if (opt.vault === undefined) {
+    Logger.error("option `--vault <path>` is missing");
+    return;
+  }
 
-    if (mf.vaults.find((v) => v.name === opt.name || v.vault === opt.vault)) {
-      console.error("Database with this name or vault already exists.");
-    } else {
-      mf.vaults.push({
-        name: opt.name,
-        vault: opt.vault,
-      });
+  let mf = new Manifest();
+  mf.read();
 
-      console.log("Created new database.");
+  if (mf.vaults.find((v) => v.name === opt.name || v.vault === opt.vault)) {
+    Logger.error("Database with this name or vault already exists.");
+  } else {
+    mf.vaults.push({
+      name: opt.name,
+      vault: opt.vault,
+    });
 
-      mf.write();
-    }
-  } catch (err) {
-    console.log(JSON.stringify(err));
+    Logger.success("Created new database.");
+
+    mf.write();
   }
 }
 

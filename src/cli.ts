@@ -20,7 +20,7 @@ export default interface CLI {
 export function RegisterCommand(cac: CAC, command: CLI): void {
   let c = cac.command(command.command.command, command.command.description);
 
-  command.options.forEach((o) => c.option(o.option, o.description));
+  command.options.forEach((o) => c = c.option(o.option, o.description));
 
   c.action(command.action);
 }

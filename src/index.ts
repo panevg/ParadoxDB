@@ -1,13 +1,11 @@
 import pkg from "../package.json";
 
-// import { Signale } from "signale";
 import cac from "cac";
 
 import { RegisterCommand } from "./cli";
 import New from "./cli/new";
 import List from "./cli/list";
-
-// const log: Signale = new Signale();
+import Logger from "./Logger";
 
 const cli = cac();
 
@@ -18,4 +16,13 @@ RegisterCommand(cli, New); // Creating new database;
 RegisterCommand(cli, List); // Shows information about databases;
 
 cli.help();
-cli.parse();
+
+try {
+    cli.parse();
+}
+catch (err: any) {
+    switch (err.name) {
+        case "CACError":
+            Logger.error(err.message);
+    }
+}
