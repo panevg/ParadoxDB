@@ -27,7 +27,7 @@ export default {
     },
     options: [
         {
-            option: "-n, --name [name]",
+            option: "--name [name]",
             description: "The name of the specific database to display information."
         }
     ],
