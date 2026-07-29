@@ -2,7 +2,7 @@
   "name": "paradoxdb",
   "type": "module",
   "author": "panevg",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "scripts": {
     "build": "bun run ./build.js"
   },

@@ -15,7 +15,7 @@ function New(opt: any) {
   let mf = new Manifest();
   mf.read();
 
-  if (mf.vaults.find((v) => v.name === opt.name || v.vault === opt.vault)) {
+  if (mf.vaults.find((v) => v.name === opt.name.toString() || v.vault === opt.vault.toString())) {
     Logger.error("Database with this name or vault already exists.");
   } else {
     mf.vaults.push({
