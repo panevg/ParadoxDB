@@ -6,7 +6,6 @@ import Logger from "../Logger";
 
 function List(opt: any) {
     const manifest = new Manifest();
-    manifest.read();
 
     if (manifest.vaults.length === 0) {
         Logger.info("Manifest is empty.");

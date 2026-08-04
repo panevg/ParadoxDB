@@ -27,6 +27,8 @@ export default class Manifest {
       mkdirSync(dirname(this.path), { recursive: true });
       writeFileSync(this.path, toml.stringify({ db: [] }), "utf-8");
     }
+
+    this.read();
   }
 
   public read(): void {

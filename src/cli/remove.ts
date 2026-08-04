@@ -9,7 +9,6 @@ function New(opt: any) {
   }
 
   let mf = new Manifest();
-  mf.read();
 
   if (!mf.vaults.find((v) => v.name === opt.name.toString())) {
     Logger.error("Database with this name doesn't exists.");

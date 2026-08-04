@@ -1,3 +1,6 @@
+import { resolve } from "path";
+import { existsSync, mkdirSync } from "fs";
+
 import type CLI from "../cli";
 import Logger from "../Logger";
 import Manifest from "../Manifest";
@@ -13,14 +16,21 @@ function New(opt: any) {
   }
 
   let mf = new Manifest();
-  mf.read();
 
   if (mf.vaults.find((v) => v.name === opt.name.toString() || v.vault === opt.vault.toString())) {
     Logger.error("Database with this name or vault already exists.");
   } else {
+    const vault = resolve(opt.vault);
+
+    if (!existsSync(vault)) {
+      mkdirSync(vault, {
+        recursive: true
+      });
+    }
+
     mf.vaults.push({
       name: opt.name,
-      vault: opt.vault,
+      vault: vault,
     });
 
     Logger.success("Created new database.");
